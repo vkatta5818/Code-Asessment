@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="text-center">
+    <a class="navbar-brand" href="#">Search Phone numbers</a>
+  </div>
+
+  <div class="row">
+    <div class="input-group m-b-50">
+    	<input [class.error]="isError" [(ngModel)]="phoneNumber" type="text" class="form-control" placeholder="Search for...">
+          <span class="input-group-btn">
+            <button (click)="search()" class="btn btn-search" type="button"><i class="fa fa-search fa-fw"></i> Search</button>
+          </span>
+    </div>
+
+    <div *ngIf="showResults">
+      <div class="combinations">
+        Total number of combinations: {{allItems.length}}
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Phone Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let page of pagedItems; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{page.phone}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+          <li [ngClass]="{disabled:pager.currentPage === 1}">
+              <a (click)="setPage(1)">First</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === 1}">
+              <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+          </li>
+          <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+              <a (click)="setPage(page)">{{page}}</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+              <a (click)="setPage(pager.currentPage + 1)">Next</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+              <a (click)="setPage(pager.totalPages)">Last</a>
+          </li>
+      </ul>
+    </div>
+  </div>
+</div>
